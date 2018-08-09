@@ -1,4 +1,3 @@
-#ifdef __cplusplus
 #include <iostream>
 #include "mbstring.h"
 #include "markovchain.h"
@@ -75,5 +74,3 @@ bool markovchain::has(const std::string key)
 }
 
 } // namespace croco
-
-#endif /* __cplusplus */

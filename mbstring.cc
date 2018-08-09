@@ -1,5 +1,3 @@
-#ifdef __cplusplus
-
 #include "mbstring.h"
 
 namespace croco {
@@ -135,5 +133,3 @@ void mbstring::_apeend(mbstring::strs_t &words, const std::string str)
 }
 
 } // namespace croco
-
-#endif /* __cplusplus */

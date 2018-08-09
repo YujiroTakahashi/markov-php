@@ -20,7 +20,7 @@ private:
 	int _width;
 
 public:
-	markovchain(const std::string str, int nsize);
+	markovchain(const std::string str, const int nsize);
 	std::string generate(const std::string start, const int width);
 	bool has(const std::string key);
 }; // class markovchain

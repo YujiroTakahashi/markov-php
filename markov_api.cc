@@ -1,5 +1,4 @@
 #include <string>
-#include <string.h>
 
 #include "markov_api.h"
 
@@ -21,10 +20,10 @@ int MarkovVersion()
  *
  * @access public
  * @param  const std::string str
- * @param  int nsize
+ * @param  const int nsize
  * @return MarkovHandle
  */
-MarkovHandle MarkovCreate(const char *str, int nsize)
+MarkovHandle MarkovCreate(const char *str, const int nsize)
 {
     MarkovHandle handle = new markovchain(std::string(str), nsize);
     return handle;
