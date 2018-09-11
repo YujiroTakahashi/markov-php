@@ -58,10 +58,6 @@ PHP_METHOD(markov, generate)
 		return;
 	}
 
-	if (0 == MarkovHas(ft_obj->markov, (const char*)start)) {
-		RETURN_FALSE;
-	}
-
 	text = MarkovGenerate(ft_obj->markov, (const char*)start, (const int)width);
 
 	ZVAL_STRING(return_value, text);

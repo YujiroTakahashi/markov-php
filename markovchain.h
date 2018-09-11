@@ -27,6 +27,7 @@ public:
 
 private:
 	std::string _weightedPick(const weights_t weights);
+	std::string _firstPick();
 }; // class markovchain
 
 } // namespace croco

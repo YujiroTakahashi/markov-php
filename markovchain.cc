@@ -41,8 +41,14 @@ std::string markovchain::generate(const std::string start, const int width)
 {
 	srand(time(NULL));
 
-	croco::mbstring mbstr(start);
-	std::string 	currentNgram = mbstr.substr(0, _nsize);
+	std::string currentNgram;
+
+	if (has(start)) {
+		croco::mbstring mbstr(start);
+		currentNgram = mbstr.substr(0, _nsize);
+	} else {
+		currentNgram = _firstPick();
+	}
 	croco::mbstring result(currentNgram);
 	int max = (_width < width) ? _width : width;
 
@@ -91,12 +97,40 @@ std::string markovchain::_weightedPick(const markovchain::weights_t weights)
 	for (auto &weight : weights) {
 		if (rnd < weight.second) {
 			pickup = weight.first;
-	      	break;
-	    }
-	    rnd -= weight.second;
+			break;
+		}
+		rnd -= weight.second;
 	}
 
 	return pickup;
 }
+
+/**
+ * 初期文字の取得
+ *
+ * @access prviate
+ * @return std::string
+ */
+std::string markovchain::_firstPick()
+{
+	int total = 0;
+	for (auto &weight : _ngrams) {
+		total += weight.second.size();
+	}
+
+	std::string pickup("なんもねー");
+	int rnd = rand() % total;
+
+	for (auto &weight : _ngrams) {
+		if (rnd < weight.second.size()) {
+			pickup = weight.first;
+			break;
+		}
+		rnd -= weight.second.size();
+	}
+
+	return pickup;
+}
+
 
 } // namespace croco
