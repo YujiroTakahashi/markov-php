@@ -13,13 +13,18 @@ namespace croco {
  */
 markovchain::markovchain(const std::string str, int nsize)
 {
-	std::string ngram;
 	croco::mbstring mbstr(str);
 
 	_nsize = nsize;
 	for (int idx = 0; idx < (mbstr.size() - _nsize - 1); idx++) {
-		ngram = mbstr.substr(idx, _nsize);
-		_ngrams[ngram].push_back(mbstr.substr(idx + _nsize, 1));
+		std::string ngram  = mbstr.substr(idx, _nsize);
+		std::string target = mbstr.substr(idx + _nsize, 1);
+
+		if (_ngrams[ngram].find(target) != _ngrams[ngram].end()) {
+			_ngrams[ngram][target]++;
+		} else {
+			_ngrams[ngram][target] = 1;
+		}
 	}
 	_width = mbstr.size();
 }
@@ -42,14 +47,8 @@ std::string markovchain::generate(const std::string start, const int width)
 	int max = (_width < width) ? _width : width;
 
 	for (int idx = 0; idx < max; idx++) {
-		std::vector<std::string> poss = _ngrams[currentNgram];
-
-		if (poss.size() == 0) {
-			poss.push_back("");
-		}
-
-		int randNum = (rand() % (poss.size()));
-		result.append(poss[randNum]);
+		std::string pickup = _weightedPick(_ngrams[currentNgram]);
+		result.append(pickup);
 		currentNgram = result.substr(result.size() - _nsize, _nsize);
 	}
 
@@ -69,8 +68,35 @@ bool markovchain::has(const std::string key)
 	croco::mbstring mbstr(key);
 	std::string 	target = mbstr.substr(0, _nsize);
 
-
 	return (_ngrams.find(target) != _ngrams.end());
+}
+
+/**
+ * 重み付けによる文字列取得
+ *
+ * @access prviate
+ * @param  const markovchain::weights_t weights
+ * @return std::string
+ */
+std::string markovchain::_weightedPick(const markovchain::weights_t weights)
+{
+	int total = 0;
+	for (auto &weight : weights) {
+		total += weight.second;
+	}
+
+	std::string pickup("");
+	int rnd = rand() % total;
+
+	for (auto &weight : weights) {
+		if (rnd < weight.second) {
+			pickup = weight.first;
+	      	break;
+	    }
+	    rnd -= weight.second;
+	}
+
+	return pickup;
 }
 
 } // namespace croco

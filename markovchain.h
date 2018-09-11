@@ -12,7 +12,8 @@ namespace croco {
 
 class markovchain {
 public:
-	typedef std::unordered_map<std::string, std::vector<std::string>> table_t;
+	typedef std::unordered_map<std::string, int> weights_t;
+	typedef std::unordered_map<std::string, weights_t> table_t;
 
 private:
     table_t _ngrams;
@@ -23,6 +24,9 @@ public:
 	markovchain(const std::string str, const int nsize);
 	std::string generate(const std::string start, const int width);
 	bool has(const std::string key);
+
+private:
+	std::string _weightedPick(const weights_t weights);
 }; // class markovchain
 
 } // namespace croco
