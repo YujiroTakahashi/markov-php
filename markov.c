@@ -173,7 +173,6 @@ PHP_MINFO_FUNCTION(markov)
 	php_info_print_table_start();
 	php_info_print_table_header(2, "markov support", "enabled");
 	php_info_print_table_row(2, "markov module version", PHP_MARKOV_VERSION);
-	php_info_print_table_row(2, "markov Library", MarkovVersion());
 	php_info_print_table_end();
 
 	DISPLAY_INI_ENTRIES();
