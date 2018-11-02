@@ -31,6 +31,7 @@ extern "C" {
 typedef void *MarkovHandle;
 
 MARKOV_API int MarkovVersion();
+MARKOV_API int MarkovSize();
 MARKOV_API MarkovHandle MarkovCreate(const char *str, const int nsize);
 MARKOV_API void MarkovFree(MarkovHandle handle);
 MARKOV_API void MarkovFreeText(char *text);

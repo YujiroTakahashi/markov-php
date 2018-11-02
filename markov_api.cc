@@ -16,6 +16,17 @@ int MarkovVersion()
 }
 
 /**
+ * get markov size
+ *
+ * @access public
+ * @return int
+ */
+int MarkovSize()
+{
+    return sizeof(markovchain);
+}
+
+/**
  * create a Markov handle
  *
  * @access public

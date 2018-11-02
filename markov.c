@@ -119,7 +119,8 @@ static zend_object *php_markov_object_new(zend_class_entry *class_type) /* {{{ *
 	php_markov_object *intern;
 
 	/* Allocate memory for it */
-	intern = ecalloc(1, sizeof(php_markov_object) + zend_object_properties_size(class_type));
+	int markovsize = MarkovSize();
+	intern = ecalloc(1, sizeof(php_markov_object) + zend_object_properties_size(class_type) + markovsize);
 
 	zend_object_std_init(&intern->zo, class_type);
 	object_properties_init(&intern->zo, class_type);
